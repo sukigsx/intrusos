@@ -97,6 +97,18 @@ software="SI"
 done
 }
 
+conexion(){
+if ping -c1 google.com &>/dev/null
+then
+    conexion="SI"
+    echo ""
+    echo -e " Conexion a internet = ${verde}SI${borra_colores}"
+else
+    conexion="NO"
+    echo ""
+    echo -e " Conexion a internet = ${rojo}NO${borra_colores}"
+fi
+}
 
 #empieza lo gordo
 clear
@@ -507,7 +519,7 @@ case $opcion in
             #Crea el fichero para incluir en el servidor 
             rm /home/$(whoami)/.intrusos_automatico.sh 0>/dev/null 1>/dev/null 2>/dev/null
             
-            sed -n 691,705p intrusos.sukigsx.sh >> /home/$(whoami)/.intrusos_automatico.sh
+            sed -n 703,717p intrusos.sukigsx.sh >> /home/$(whoami)/.intrusos_automatico.sh
             
            echo -e "${amarillo}Configurando la tarea cron automatica.${borra_colores}"
             echo ""
