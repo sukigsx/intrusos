@@ -133,8 +133,8 @@ clear
 #maximiza la terminal.
 echo -e "${rosa}"; figlet -c sukigsx; echo -e "${borra_colores}"
 echo ""
-echo -e "${verde} Diseñado por sukigsx / Contacto:   sukigsx.mbsistemas@gmail.com${borra_colores}"
-echo -e "${verde}                                    https://mbsistemas.ddns.net${borra_colores}"
+echo -e "${verde} Diseñado por sukigsx / Contacto:   scripts@mbbsistemas.es${borra_colores}"
+echo -e "${verde}                                    https://repositorio.mbbsistemas.es${borra_colores}"
 echo ""
 echo -e "${verde} Nombre del script < $0 > Comprueba tu red lan/wifi de Intrusos.  ${borra_colores}"
 echo ""
