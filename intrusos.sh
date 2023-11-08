@@ -18,102 +18,70 @@ clear
 figlet -c Gracias por 
 figlet -c utilizar mi
 figlet -c script
-wmctrl -r :ACTIVE: -b remove,maximized_vert,maximized_horz
 exit
 }
 
-
 #comprueba actualiczacion del script
-clear
-nombre_script="intrusos.sukigsx.sh" #colocar nombre del escript completo
-ruta_destino="/usr/bin" #colocar la ruta del script sin la barra al final ( /usr/bin )
-direccion_repositorio="https://github.com/sukigsx/Intrusos.git" #colocar la direccion completa del repositorio
+actualizar_script(){
+archivo_local="intrusos.sh" # Nombre del archivo local
+ruta_repositorio="https://github.com/sukigsx/intrusos.git" #ruta del repositorio para actualizar y clonar con git clone
 
-if [ -e $ruta_destino/$nombre_script ] #comprueba si se ha instalado el script con el deb, comprobando el fichero /usr/bin/inicio.sukigsx.sh
+# Obtener la ruta del script
+descarga=$(dirname "$(readlink -f "$0")")
+git clone $ruta_repositorio /tmp/comprobar >/dev/null 2>&1
+
+diff $descarga/$archivo_local /tmp/comprobar/$archivo_local >/dev/null 2>&1
+
+
+if [ $? = 0 ]
 then
-    #ruta=$ruta_destino
-    mkdir /tmp/com_update 2>/dev/null 1>/dev/null 0>/dev/null
-    git clone $direccion_repositorio /tmp/com_update 2>/dev/null 1>/dev/null 0>/dev/null
-    diff /tmp/com_update/codigo/$nombre_script $ruta_destino/$nombre_script 2>/dev/null 1>/dev/null 0>/dev/null
-    if [ $? = "0" ] 2>/dev/null 1>/dev/null 0>/dev/null
-    then
-        echo -e " [${verde}ok${borra_colores}] script, esta actualizado."
-        sleep 3
-    else
-        echo -e " [${rojo}X${borra_colores}] ${amarillo}script NO actualizado, Se procede a la actualizacion automatica.${borra_colores}";sleep 2
-        #ruta="/usr/bin"
-        cd /tmp
-        mkdir temporal_update
-        git clone $direccion_repositorio /tmp/temporal_update 2>/dev/null 1>/dev/null 0>/dev/null
-        cd /tmp/temporal_update/codigo/
-        sudo chmod +x $ruta_destino/*.sukigsx.sh
-        sudo cp -r /tmp/temporal_update/codigo/* $ruta_destino
-        sudo rm -r /tmp/temporal_update
-        clear
-        echo "";
-        echo -e "${verde} Script actualizado. Tienes que reiniciar el script para aplicar cambios.${borra_colores}";
-        echo "";
-        read -p " Pulsa una tecla para continuar."
-        ctrl_c
-    fi
-
+    #esta actualizado, solo lo comprueba
+    echo ""
+    echo -e "${verde} El script${borra_colores} $0 ${verde}esta actualizado.${borra_colores}"
+    echo ""
+    chmod -R +w /tmp/comprobar
+    rm -R /tmp/comprobar
+    actualizado="SI"
 else
-    ruta=$(pwd)
-    mkdir /tmp/com_update 2>/dev/null 1>/dev/null 0>/dev/null
-    git clone $direccion_repositorio /tmp/com_update 2>/dev/null 1>/dev/null 0>/dev/null
-    diff /tmp/com_update/codigo/$nombre_script $ruta/$nombre_script 2>/dev/null 1>/dev/null 0>/dev/null
-    if [ $? = "0" ] 2>/dev/null 1>/dev/null 0>/dev/null
-    then
-        echo -e " [${verde}ok${borra_colores}] script, esta actualizado."
-        sleep 3
-    else
-        echo -e " [${rojo}XX${borra_colores}] ${amarillo}script NO actualizado, Se procede a la actualizacion automatica.${borra_colores}";sleep 3
-        ruta=$(pwd)
-        cd /tmp
-        mkdir temporal_update
-        git clone $direccion_repositorio /tmp/temporal_update 2>/dev/null 1>/dev/null 0>/dev/null
-        cd /tmp/temporal_update/codigo/
-        sudo chmod +x $ruta/*.sukigsx.sh
-        sudo cp -r /tmp/temporal_update/codigo/* $ruta
-        sudo rm -r /tmp/temporal_update
-        clear
-        echo "";
-        echo -e "${verde} Script actualizado. Tienes que reiniciar el script para aplicar cambios.${borra_colores}";
-        echo "";
-        read -p " Pulsa una tecla para continuar."
-        ctrl_c
-    fi
-
+    #hay que actualizar, comprueba y actualiza
+    echo ""
+    echo -e "${amarillo} EL script${borra_colores} $0 ${amarillo}NO esta actualizado.${borra_colores}"
+    echo -e "${verde} Se procede a su actualizacion automatica.${borra_colores}"
+    sleep 3
+    mv /tmp/comprobar/$archivo_local $descarga
+    chmod -R +w /tmp/comprobar
+    rm -R /tmp/comprobar
+    echo ""
+    echo -e "${amarillo} El script se ha actualizado, es necesario cargarlo de nuevo.${borra_colores}"
+    echo -e ""
+    read -p " Pulsa una tecla para continuar." pause
+    exit
 fi
-sudo rm -r /tmp/com_update 2>/dev/null 1>/dev/null 0>/dev/null
+}
 
 
 #comprueba software necesario
-software="wget git wmctrl figlet diff fping nano nmap" #ponemos el foftware a instalar separado por espacion dentro de las comillas ( soft1 soft2 soft3 etc )
-clear
-## Vericica conexion a internet
+software_necesario(){
 echo ""
-echo -e "${verde} Verificando software necesario.${borra_colores}"
-if ping -c1 google.com &>/dev/null;
-then
-
-    echo ""
-    echo -e " [${verde}ok${borra_colores}] Conexion a internet."
-
-    for paquete in $software
-    do
-    which $paquete 2>/dev/null 1>/dev/null 0>/dev/null #comprueba si esta el programa llamado programa
-    sino=$? #recojemos el 0 o 1 del resultado de which
-    contador="1" #ponemos la variable contador a 1
+echo -e " Comprobando el software necesario."
+echo ""
+software="wget git figlet diff fping nano nmap" #ponemos el foftware a instalar separado por espacion dentro de las comillas ( soft1 soft2 soft3 etc )
+for paquete in $software
+do
+which $paquete 2>/dev/null 1>/dev/null 0>/dev/null #comprueba si esta el programa llamado programa
+sino=$? #recojemos el 0 o 1 del resultado de which
+contador="1" #ponemos la variable contador a 1
     while [ $sino -gt 0 ] #entra en el bicle si variable programa es 0, no lo ha encontrado which
     do
         if [ $contador = "4" ] || [ $conexion = "no" ] 2>/dev/null 1>/dev/null 0>/dev/null #si el contador es 4 entre en then y sino en else
         then #si entra en then es porque el contador es igual a 4 y no ha podido instalar o no hay conexion a internet
+            clear
             echo ""
             echo -e " ${amarillo}NO se ha podido instalar ${rojo}$paquete${amarillo}.${borra_colores}"
-            echo -e " ${amarillo}Intentelo usted con la orden: (${borra_colores}sudo apt install$paquete ${amarillo})${borra_colores}"
+            echo -e " ${amarillo}Intentelo usted con la orden: (${borra_colores}sudo apt install $paquete ${amarillo})${borra_colores}"
             echo -e ""
             echo -e " ${rojo}No se puede ejecutar el script sin el software necesario.${borra_colores}"
+            echo ""; read p
             echo ""
             exit
         else #intenta instalar
@@ -124,26 +92,33 @@ then
             sino=$? ##recojemos el 0 o 1 del resultado de which
         fi
     done
-        echo -e " [${verde}ok${borra_colores}] $paquete."
-    done
-
-else
-    echo ""
-    echo -e " [${rojo}XX${borra_colores}] Conexion a internet."
-
-fi
-sleep 3
+echo -e " [${verde}ok${borra_colores}] $paquete."
+software="SI"
+done
+}
 
 
 #empieza lo gordo
-#maximiza la terminal.
-wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
+clear
+echo ""
+conexion
+echo ""
+if [ $conexion = "SI" ]
+then
+    #si hay internet
+    software_necesario
+    actualizar_script
+else
+    #no hay internet
+    software_necesario
+fi
+
+sleep 2
 
 while :
 do
 clear
 #maximiza la terminal.
-wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
 echo -e "${rosa}"; figlet -c sukigsx; echo -e "${borra_colores}"
 echo ""
 echo -e "${verde} Diseñado por sukigsx / Contacto:   sukigsx.mbsistemas@gmail.com${borra_colores}"
@@ -532,7 +507,7 @@ case $opcion in
             #Crea el fichero para incluir en el servidor 
             rm /home/$(whoami)/.intrusos_automatico.sh 0>/dev/null 1>/dev/null 2>/dev/null
             
-            sed -n 717,731p intrusos.sukigsx.sh >> /home/$(whoami)/.intrusos_automatico.sh
+            sed -n 691,705p intrusos.sukigsx.sh >> /home/$(whoami)/.intrusos_automatico.sh
             
            echo -e "${amarillo}Configurando la tarea cron automatica.${borra_colores}"
             echo ""
@@ -648,11 +623,10 @@ case $opcion in
 		echo -e "${verde} 3- fping  >  Para escanear la red.${borra_colores}"
 		echo -e "${verde} 4- ssmtp  >  Para configurar correo electronico.${borra_colores}"
 		echo -e "${verde} 5- mail   >  Para poder mandar correos electronicos.${borra_colores}"
-		echo -e "${verde} 6- wmctrl >  Para controlar el tamaño de la terminal.${borra_colores}"
-		echo -e "${verde} 7- figlet >  Para los logos.${borra_colores}"
-		echo -e "${verde} 8- diff   >  Utilizado para la actualizacion del script.${borra_colores}"
+		echo -e "${verde} 6- figlet >  Para los logos.${borra_colores}"
+		echo -e "${verde} 7- diff   >  Utilizado para la actualizacion del script.${borra_colores}"
 		echo -e "${verde} 8- git    >  Utilizado para la actualizacion del script.${borra_colores}"
-		echo -e "${verde} 8- wget   >  Utilizado para la actualizacion del script.${borra_colores}"
+		echo -e "${verde} 9- wget   >  Utilizado para la actualizacion del script.${borra_colores}"
 		echo ""
 		echo -e "${verde}El fichero que se crea con tus ips permitidas se aloja como${borra_colores}"
 		echo -e "${verde}fichero oculto en tu home (/home/tu_usuario/.ipspermitidas).${borra_colores}"
