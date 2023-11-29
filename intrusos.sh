@@ -144,9 +144,10 @@ echo -e "     3. ${azul}Borrar el fichero de ip's permitidas.${borra_colores}"
 echo -e "     4. ${azul}Editar/añadir fichero de ip's permitidas.${borra_colores}"
 echo -e "     5. ${azul}Escanear la red..${borra_colores}"
 echo ""
-echo -e "     6. ${azul}Instalar servicio en tu maquina (comprobacion automatica).${borra_colores}"
+echo -e "     6. ${azul}Instalar el servicio en tu maquina (comprobacion automatica).${borra_colores}"
+echo -e "     7. ${azul}Desistalar el servicio de tu maquina (comprobacion automatica).${borra_colores}"
 echo ""
-echo -e "     7. ${azul}Borrado de datos.${borra_colores}"
+echo -e "     8. ${azul}Borrado de datos.${borra_colores}"
 echo ""
 echo -e "    90. ${azul}Ayuda.${borra_colores}"
 echo -e "    99. ${azul}Salir.${borra_colores}"
@@ -371,7 +372,7 @@ case $opcion in
             echo
             echo -e "${verde} Si quieres modificar, primero tienes que desistalar el servicio.${borra_colores}"
             echo -e "${verde} Opcion 7 del menu."
-            sleep 4
+            read -p " Pulsa una tecla para continuar."
             break
         fi
 
@@ -601,8 +602,27 @@ case $opcion in
             fi
             
         fi;;
-        
-    7)  #borrado de datos
+
+    7)  #desistalar el servicio
+        echo ""
+        read -p " Seguro que quieres desistalar el servicio? (S/n) -->> "
+        if [[ $ips = "S" || $ips = "s" ]]
+        then
+            rm /home/$(whoami)/.intrusos_automatico.sh 0>/dev/null 1>/dev/null 2>/dev/null
+            sudo sed -i '/intrusos/d' /var/spool/cron/crontabs/$(whoami) 0>/dev/null 1>/dev/null 2>/dev/null
+            echo ""
+            echo -e "${verde} Servicio desistalado.${borra_colores}"
+            echo ""
+            sleep 3
+        else
+            echo ""
+            echo -e "${amarillo} OK, cancelado. ${borra_colores}"
+            echo ""
+            sleep 3
+        fi
+        ;;
+
+    8)  #borrado de datos
         clear
         echo -e ""
         echo -e "${rojo}-- Ojo, CUIDADO, Borrado de datos --${borra_colores}"
