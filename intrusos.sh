@@ -193,7 +193,10 @@ case $opcion in
             echo -e "${amarillo} Has contestado N o bien lo has puesto en minusculas.${borra_colores}"
             sleep 3
 		
-        fi;;
+        fi
+        #quita espacion en blanco del fichero .ipspermitidas
+        sed -i 's/ //g' /home/$(whoami)/.ipspermitidas 2>/dev/null
+        ;;
         
     2)	#Ver el archivo de ip's permitidas
 		clear
@@ -243,7 +246,8 @@ case $opcion in
             echo ""
             echo -e "${amarillo}Crea el fichero primero. Opcion 1 del menu.${borra_colores}"
             sleep 5
-        fi;;
+        fi
+        ;;
         
     4)	#editar añadir al fichero de ip's permitidas
 		if [[ -f /home/$(whoami)/.ipspermitidas && -s /home/$(whoami)/.ipspermitidas ]]
@@ -259,7 +263,10 @@ case $opcion in
             clear
             sleep 1
             nano /home/$(whoami)/.ipspermitidas
-		fi;;
+		fi
+		#quita espacion en blanco del fichero .ipspermitidas
+        sed -i 's/ //g' /home/$(whoami)/.ipspermitidas 2>/dev/null
+		;;
 		
     5)	#escanear la red
         #comprueba que exista el fichero ipspermitidas
@@ -285,7 +292,7 @@ case $opcion in
                 echo -e "${borra_colores}"
                 for  (( ; ; ))
                 do
-                        read -p "Dime la ip permitida? (ctrl + c = salir) -->> " ips
+                        read -p "Dime la ip permitida? ( S = salir) -->> " ips
                         if [[ $ips = "S" || $ips = "s" ]]
                         then
                                 if [[ -f /home/$(whoami)/.ipspermitidas && -s /home/$(whoami)/.ipspermitidas ]]
@@ -304,6 +311,8 @@ case $opcion in
                 done
         fi 
 
+        #quita espacion en blanco del fichero .ipspermitidas
+        sed -i 's/ //g' /home/$(whoami)/.ipspermitidas 2>/dev/null
 
         #Detecta los rangos de tu red y los pone en el menu de seleccion
         clear
