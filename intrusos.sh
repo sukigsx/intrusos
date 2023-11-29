@@ -18,6 +18,7 @@ clear
 figlet -c Gracias por 
 figlet -c utilizar mi
 figlet -c script
+sleep 1
 exit
 }
 
@@ -543,7 +544,7 @@ case $opcion in
             #Crea el fichero para incluir en el servidor 
             rm /home/$(whoami)/.intrusos_automatico.sh 0>/dev/null 1>/dev/null 2>/dev/null
             descarga=$(dirname "$(readlink -f "$0")")
-            sed -n '709,724p' "$0" >> /home/$(whoami)/.intrusos_automatico.sh
+            sed -n '757,772p' "$0" >> /home/$(whoami)/.intrusos_automatico.sh
             
            echo -e "${amarillo}Configurando la tarea cron automatica.${borra_colores}"
             echo ""
