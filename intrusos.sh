@@ -372,6 +372,7 @@ case $opcion in
             echo
             echo -e "${verde} Si quieres modificar, primero tienes que desistalar el servicio.${borra_colores}"
             echo -e "${verde} Opcion 7 del menu."
+            echo ""
             read -p " Pulsa una tecla para continuar."
             break
         fi
@@ -605,8 +606,8 @@ case $opcion in
 
     7)  #desistalar el servicio
         echo ""
-        read -p " Seguro que quieres desistalar el servicio? (S/n) -->> "
-        if [[ $ips = "S" || $ips = "s" ]]
+        read -p " Seguro que quieres desistalar el servicio? (S/n) -->> " sn
+        if [[ $sn = "S" || $sn = "s" ]]
         then
             rm /home/$(whoami)/.intrusos_automatico.sh 0>/dev/null 1>/dev/null 2>/dev/null
             sudo sed -i '/intrusos/d' /var/spool/cron/crontabs/$(whoami) 0>/dev/null 1>/dev/null 2>/dev/null
