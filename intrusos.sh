@@ -455,7 +455,7 @@ case $opcion in
         clear
         echo -e "${amarillo}Enviando correo de prueba...${borra_colores}"
         sleep 1
-        echo -e "Subject:Correo de prueba de intrusos.sh\n\n\nEste correo es solo para comprobar que todo funciona.\nBorralo y no le respontas.\n\nContacto: sukigsx@reparaciondesistemas.com\n\nWeb: www.reparaciondesistemas.com\nGithub: www.github.com/sukigsx\n\nMUCHAS GRACIAS POR UTILIZAR MI SCRIPT. " | msmtp $emaildestino 1>/dev/null 
+        echo -e "Subject:Correo de prueba de intrusos.sh\n\n\nEste correo es solo para comprobar que todo funciona.\nBorralo y no le respontas.\n\nContacto: sukigsx@reparaciondesistemas.com\n\nWeb: www.reparaciondesistemas.com\nGithub: www.github.com/sukigsx\n\nMUCHAS GRACIAS POR UTILIZAR MI SCRIPT. " | msmtp $emaildestino 0>/dev/null 1>/dev/null 2>/dev/null
         if [ $? -ne 0 ]
         then
             echo ""
