@@ -360,6 +360,23 @@ case $opcion in
         rm /tmp/ipsactivas 2>/dev/null;;
 
     6)  #instala el servicio, comprobacion automatica
+        #comprueba si ya esta instalado el sevicio en crontab
+        # Obtén el contenido de la crontab actual
+        crontab_content=$(crontab -l 2>/dev/null)
+
+        # Busca la palabra "intrusos" en el contenido de la crontab
+        if [[ "$crontab_content" =~ "intrusos" ]]; then
+            echo
+            echo -e "La palabra 'intrusos' se encuentra en la crontab."
+            echo
+            read p
+        else
+            echo
+            echo -e "La palabra 'intrusos' no se encuentra en la crontab."
+            echo
+            read p
+        fi
+
         #comprobacion de ssmtp
         clear
         which msmtp 2>/dev/null 1>/dev/null 0>/dev/null
