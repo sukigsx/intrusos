@@ -367,14 +367,12 @@ case $opcion in
         # Busca la palabra "intrusos" en el contenido de la crontab
         if [[ "$crontab_content" =~ "intrusos" ]]; then
             echo
-            echo -e "La palabra 'intrusos' se encuentra en la crontab."
+            echo -e "${amarillo} Ya tienes instalado el servicio.${borra_colores}"
             echo
-            read p
-        else
-            echo
-            echo -e "La palabra 'intrusos' no se encuentra en la crontab."
-            echo
-            read p
+            echo -e "${verde} Si quieres modificar, primero tienes que desistalar el servicio.${borra_colores}"
+            echo -e "${verde} Opcion 7 del menu."
+            sleep 4
+            break
         fi
 
         #comprobacion de ssmtp
