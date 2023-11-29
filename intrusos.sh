@@ -525,7 +525,7 @@ case $opcion in
             
             #Crea el fichero para incluir en el servidor 
             rm /home/$(whoami)/.intrusos_automatico.sh 0>/dev/null 1>/dev/null 2>/dev/null
-            
+            descarga=$(dirname "$(readlink -f "$0")")
             sed -n 709,724p intrusos.sh >> /home/$(whoami)/.intrusos_automatico.sh
             
            echo -e "${amarillo}Configurando la tarea cron automatica.${borra_colores}"
