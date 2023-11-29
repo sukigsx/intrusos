@@ -612,7 +612,7 @@ case $opcion in
             sudo apt remove nmap fping ssmtp mailutils -y 0>/dev/null 1>/dev/null 2>/dev/null
             sudo apt purge nmap fping ssmtp mailutils -y 0>/dev/null 1>/dev/null 2>/dev/null
             sudo apt clean nmap fping ssmtp mailutils -y 0>/dev/null 1>/dev/null 2>/dev/null
-            sudo rm /var/spool/cron/crontabs/$(whoami) 0>/dev/null 1>/dev/null 2>/dev/null
+            sudo sed -i '/intrusos/d' /var/spool/cron/crontabs/$(whoami) 0>/dev/null 1>/dev/null 2>/dev/null
             echo ""
             echo -e "${verde}Ok... ¡¡ TODO BORRADO !!${borra_colores}"
             sleep 3
