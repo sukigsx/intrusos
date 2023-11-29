@@ -605,20 +605,31 @@ case $opcion in
         fi;;
 
     7)  #desistalar el servicio
-        echo ""
-        read -p " Seguro que quieres desistalar el servicio? (S/n) -->> " sn
-        if [[ $sn = "S" || $sn = "s" ]]
+        #comprueba si ya esta instalado el sevicio en crontab
+        # Obtén el contenido de la crontab actual
+        crontab_content=$(crontab -l 2>/dev/null)
+
+        # Busca la palabra "intrusos" en el contenido de la crontab
+        if [[ "$crontab_content" =~ "intrusos" ]]
         then
-            rm /home/$(whoami)/.intrusos_automatico.sh 0>/dev/null 1>/dev/null 2>/dev/null
-            sudo sed -i '/intrusos/d' /var/spool/cron/crontabs/$(whoami) 0>/dev/null 1>/dev/null 2>/dev/null
-            echo ""
-            echo -e "${verde} Servicio desistalado.${borra_colores}"
-            echo ""
-            sleep 3
+            read -p " Seguro que quieres desistalar el servicio? (S/n) -->> " sn
+            if [[ $sn = "S" || $sn = "s" ]]
+            then
+                rm /home/$(whoami)/.intrusos_automatico.sh 0>/dev/null 1>/dev/null 2>/dev/null
+                sudo sed -i '/intrusos/d' /var/spool/cron/crontabs/$(whoami) 0>/dev/null 1>/dev/null 2>/dev/null
+                echo ""
+                echo -e "${verde} Servicio desistalado.${borra_colores}"
+                echo ""
+                sleep 3
+            else
+                echo ""
+                echo -e "${amarillo} OK, cancelado. ${borra_colores}"
+                echo ""
+                sleep 3
+            fi
         else
             echo ""
-            echo -e "${amarillo} OK, cancelado. ${borra_colores}"
-            echo ""
+            echo -e "${amarillo} No tienes el servicio instalado en tu maquina.${borra_colores}"
             sleep 3
         fi
         ;;
