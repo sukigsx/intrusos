@@ -526,7 +526,7 @@ case $opcion in
             #Crea el fichero para incluir en el servidor 
             rm /home/$(whoami)/.intrusos_automatico.sh 0>/dev/null 1>/dev/null 2>/dev/null
             
-            sed -n 703,717p intrusos.sukigsx.sh >> /home/$(whoami)/.intrusos_automatico.sh
+            sed -n 709,724p intrusos.sh >> /home/$(whoami)/.intrusos_automatico.sh
             
            echo -e "${amarillo}Configurando la tarea cron automatica.${borra_colores}"
             echo ""
@@ -706,7 +706,7 @@ done
 #codifo dentro de la funcion para el fichero de .intrusos_automatico.sh
 function nousar()
 {
-cd /home/sukigsx/
+cd /home/$(whoami)/
 rango_red=$(hostname -I | awk '{ print $1 }')
 
 #captura las ips que estas activas en el mopmento del escaneo y crea el fichero ipsactivas para compararlo con el ipslegales
