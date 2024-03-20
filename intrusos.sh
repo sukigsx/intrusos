@@ -387,7 +387,8 @@ case $opcion in
         echo -e "${rojo} Software necesario NO instalado.${borra_colores}"
         echo -e "${amarillo} Instalando msmtp.${borra_colores}"
         sleep 1
-        sudo apt install msmtp msmtp-mta -y 2>/dev/null 1>/dev/null 0>/dev/null
+        sudo DEBIAN_FRONTEND=noninteractive apt-get -y install msmtp 2>/dev/null 1>/dev/null 0>/dev/null
+        #sudo apt install msmtp msmtp-mta -y 2>/dev/null 1>/dev/null 0>/dev/null
         which msmtp 2>/dev/null 1>/dev/null 0>/dev/null
         msmtp=$?
         done
