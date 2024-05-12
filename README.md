@@ -36,8 +36,17 @@ clear, echo, read, if, case, for, rm, fping, diff, grep, awk, sort, nano, msmtp,
 Si no dispone de ellos los intentara instalar por si solo.
 
 # Instalacion
-    Simple solo hay que ejecutar la orden :
-    git clone https://github.com/sukigsx/intrusos.git y despues entrar al repositorio clonado.
-    ejecutar con la orden bash intrusos.sh o bien ./intrusos.sh
+Simple solo hay que ejecutar la orden :
 
+    git clone https://github.com/sukigsx/intrusos.git
+y despues entrar al repositorio clonado y ejecutar con la orden
+
+    bash intrusos.sh
+o bien
+
+    ./intrusos.sh
+Tambien puedes utilizar mi script (ejecutar_escripts), en el cual puedes instalar todos mis script del repositorio.
+
+    git clone https://github.com/sukigsx/ejecutar_scripts.git
+# Espero od guste !!!!!!
 # ESPERO OS GUSTE !!!!!!!!!!!!!!!!!!
