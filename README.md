@@ -49,4 +49,3 @@ Tambien puedes utilizar mi script (ejecutar_escripts), en el cual puedes instala
 
     git clone https://github.com/sukigsx/ejecutar_scripts.git
 # Espero od guste !!!!!!
-# ESPERO OS GUSTE !!!!!!!!!!!!!!!!!!
